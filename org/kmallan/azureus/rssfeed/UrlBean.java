@@ -355,7 +355,7 @@ public class UrlBean implements Serializable {
     } else if((sb.getName() == null || sb.getName().length() == 0) && name != null) {
       sb.setName(name);
     }
-    sb.incrementFailCount();
+    sb.recordFailure();
     return sb.isSkipped(maxRetries);
   }
 

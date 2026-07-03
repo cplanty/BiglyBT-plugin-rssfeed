@@ -1768,7 +1768,7 @@ public class View implements MouseListener, SelectionListener, MenuListener, Mod
         final ListBean listBean = (ListBean)selListItem.getBean();
         UrlBean urlBean = listBean.getFeed();
         String link = listBean.getLocation();
-        int maxRetries = Plugin.getIntParameter("MagnetMaxRetries", 5);
+        int maxRetries = Plugin.getIntParameter("MagnetMaxRetries", 3);
         boolean currentlySkipped = urlBean.isSkipped(link, maxRetries);
         if(currentlySkipped) {
           // un-skip: drop the record entirely so the item is retried afresh
@@ -2082,7 +2082,7 @@ public class View implements MouseListener, SelectionListener, MenuListener, Mod
             itemCancel.setEnabled(false);
           }
           itemSkip.setEnabled(true);
-          int maxRetries = Plugin.getIntParameter("MagnetMaxRetries", 5);
+          int maxRetries = Plugin.getIntParameter("MagnetMaxRetries", 3);
           boolean skipped = listBean.getFeed().isSkipped(listBean.getLocation(), maxRetries);
           Messages.setLanguageText(itemSkip, skipped
               ? "RSSFeed.Status.ListTable.Menu.Unskip"

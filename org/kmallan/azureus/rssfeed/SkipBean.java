@@ -70,7 +70,11 @@ public class SkipBean implements Serializable {
     this.failCount = failCount;
   }
 
-  public int incrementFailCount() {
+  /**
+   * Record a failed download attempt: bumps the failure count and stamps the
+   * time of failure. Returns the new failure count.
+   */
+  public int recordFailure() {
     this.failCount++;
     this.lastFailTime = System.currentTimeMillis();
     return this.failCount;

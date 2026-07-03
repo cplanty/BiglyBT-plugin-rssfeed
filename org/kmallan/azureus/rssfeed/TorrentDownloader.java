@@ -152,7 +152,7 @@ public class TorrentDownloader {
             boolean genuineFailure = (st == ListBean.DOWNLOAD_FAIL || st == Downloader.DOWNLOADER_ERROR)
                 && !urlBean.isManualSkipped(link);
             if(genuineFailure) {
-              int maxRetries = Plugin.getIntParameter("MagnetMaxRetries", 5);
+              int maxRetries = Plugin.getIntParameter("MagnetMaxRetries", 3);
               urlBean.recordFailure(link, listBean.getName(), maxRetries);
               view.rssfeedConfig.storeOptions();
             }

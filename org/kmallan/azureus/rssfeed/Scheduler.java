@@ -592,7 +592,7 @@ public class Scheduler extends TimerTask {
 
       // honour manual skip and the auto-skip-after-N-failures rule
       if(state == ListBean.DOWNLOAD_INCL) {
-        int maxRetries = Plugin.getIntParameter("MagnetMaxRetries", 5);
+        int maxRetries = Plugin.getIntParameter("MagnetMaxRetries", 3);
         if(urlBean.isSkipped(link, maxRetries)) {
           Plugin.debugOut("skipping item (manual/auto): " + link);
           state = ListBean.DOWNLOAD_SKIP;
