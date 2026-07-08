@@ -21,8 +21,11 @@ param(
   [string]$PluginsDir = "$env:APPDATA\BiglyBT\plugins",
   # Optional explicit JDK home.
   [string]$JavaHome,
-  # Target bytecode release (BiglyBT bundles a Java 21 runtime).
-  [string]$Release = "21"
+  # Target bytecode release. Java 8 maximizes compatibility (some BiglyBT
+  # installs still run on a Java 8 runtime) and the resulting jar also loads on
+  # newer JREs (11/17/21). The plugin uses no language/API features newer than 8.
+  # Raise this if a future JDK drops Java 8 target support.
+  [string]$Release = "8"
 )
 
 $ErrorActionPreference = "Stop"

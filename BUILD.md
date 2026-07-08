@@ -22,17 +22,21 @@ in-jar structure (`org/kmallan/azureus/rssfeed/*.java` for code and
 
 ### Match the bytecode target to BiglyBT's runtime
 
-BiglyBT ships its own JRE (in the `jre/` subfolder of the install). Compile with
-`--release <N>` where `<N>` is that JRE's Java version, so the classes can be
-loaded at runtime. Check it with:
+BiglyBT ships its own JRE (in the `jre/` subfolder of the install). The built
+classes must not use a **newer** bytecode version than that JRE, or BiglyBT will
+fail to load the plugin with `UnsupportedClassVersionError`. Check the JRE version
+with:
 
 ```
 "<BiglyBT install>/jre/bin/java" -version
 ```
 
-At the time of writing BiglyBT bundles **Java 21**, so the examples below use
-`--release 21`. If you compile with a newer JDK **without** `--release`, BiglyBT
-will fail to load the plugin with `UnsupportedClassVersionError`.
+Different BiglyBT installs bundle different JREs (seen in the wild: Java 8 on older
+installs, Java 21 on recent ones). To load everywhere, the build **targets Java 8
+by default** (`--release 8`) — the plugin uses no language/API features newer than
+8, and a Java 8 jar also runs fine on newer JREs (11/17/21). You can override with
+`-Release <N>` if desired. (Very new JDKs warn that `--release 8` is obsolete but
+still support it; raise the target if a future JDK removes it.)
 
 ## Option A — Windows (PowerShell helper script)
 
@@ -50,7 +54,7 @@ Useful parameters:
 
 - `-JavaHome "C:\Program Files\Java\jdk-26.0.1"` — pick a specific JDK if it is not
   on `PATH` / `JAVA_HOME`.
-- `-Release 21` — bytecode target (defaults to 21).
+- `-Release 8` — bytecode target (defaults to 8; see note above).
 - `-PluginsDir <path>` — override the install target (defaults to
   `%APPDATA%\BiglyBT\plugins`).
 
@@ -66,7 +70,7 @@ of `;` on Linux/macOS):
 
 ```sh
 # 1. Compile
-javac --release 21 -encoding UTF-8 \
+javac --release 8 -encoding UTF-8 \
   -cp "/path/to/BiglyBT/BiglyBT.jar:/path/to/BiglyBT/swt.jar:json-io_2.5.2.1.jar" \
   -d build $(find org -name '*.java')
 
